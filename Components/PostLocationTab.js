@@ -55,7 +55,7 @@ export default function PostLocationTab() {
     }
 
     return (
-        <View style={styles.container}>
+    <View style={styles.container}>
         <TextInput style={styles.input} placeholder="name" onChangeText={(text) => setName(text)}/> 
         <TextInput style={styles.input} placeholder="description" onChangeText={(text) => {setDescription(text)}} />
         <Button title="Post Point-of-Interest" onPress={() => {post()}} />
