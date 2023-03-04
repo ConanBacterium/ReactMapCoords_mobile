@@ -1,27 +1,40 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, TextInput, Button, ScrollView  } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, ScrollView, TouchableHighlight } from 'react-native';
 import { useLocation } from '../hooks/useLocation';
 import { WebView } from 'react-native-webview';
 
 const styles = StyleSheet.create({
-  titleText: {
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  listItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  title: {
     fontSize: 20,
     fontWeight: 'bold',
   },
-  container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+  distance: {
+    fontSize: 16,
+    color: '#999',
   },
+
   input: {
-      width: 300,
-      height: 40,
-      borderWidth: 1,
-      borderColor: "black",
-      marginBottom: 20,
-  }
-})
+    width: 300,
+    height: 40,
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 20,
+}
+});
+
 // TODO refactor out of this file? 
 async function getNearbyArticles(lat, lng, radius = 10000) {
   const endpoint = 'https://en.wikipedia.org/w/api.php';
@@ -50,18 +63,28 @@ async function getNearbyArticles(lat, lng, radius = 10000) {
 
 
 const ArticleView = (props) => {
+  const [pressed, setPressed] = useState(false);
+
+  const handlePressIn = () => {
+    setPressed(true);
+  };
+
+  const handlePressOut = () => {
+    setPressed(false);
+  };
   return (
-    <View>
-      <Text style={styles.titleText} onPress={(event) => {props.handleTitleClick(props.article)}}>{props.article.title}</Text>
-      <Text>Dist: {props.article.dist}</Text>
+      <View style={styles.listItem}>
+      <Text style={styles.title} onPress={(event) => {props.handleTitleClick(props.article)}}>{props.article.title}</Text>
+      <Text style={styles.distance}>Dist: {props.article.dist}</Text>
     </View>
+
   )
 }
 
 export default function WikiTab() {
   const [location, updateLocation] = useLocation();
   const [articles, setArticles] = React.useState([]);
-  const [currentUrl, setCurrentUrl] = useState("wikipedia.org");
+  const [currentUrl, setCurrentUrl] = useState("");
   const [currentArticle, setCurrentArticle] = useState(null);
   let webview = null
   const allowedUrls = ["wikipedia.org", "wikimedia.org"]

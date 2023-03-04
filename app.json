@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "ReactMapCoords_mobile",
-    "slug": "ReactMapCoords_mobile",
+    "name": "WikiHagen",
+    "slug": "WikiHagen",
+    "description": "WikiHagen, explore the city of Copenhagen",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
